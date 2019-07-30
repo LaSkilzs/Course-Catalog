@@ -54,7 +54,6 @@ class Catalog extends React.Component {
         badgeData.push(this.countTags(badgeData, tag));
         badgeData.push(this.countTags(badgeData, "all"));
         badgeData = badgeData.sort();
-        console.log(badgeData);
         return (badgeData = badgeData.filter(tag => tag !== 0));
       });
     });
@@ -74,7 +73,6 @@ class Catalog extends React.Component {
     let newBadgeData = [];
     badgeData = this.getBadgeData(courses);
     newBadgeData = this.createBadge(badgeData);
-    console.log(this.countCatalogBadges(courses, newBadgeData));
     return this.countCatalogBadges(courses, newBadgeData);
   };
 
@@ -107,7 +105,7 @@ class Catalog extends React.Component {
     if (tags.includes(name)) {
       return 1;
     } else if (name === "all") {
-      return 0.5;
+      return 1;
     } else {
       return 0;
     }
