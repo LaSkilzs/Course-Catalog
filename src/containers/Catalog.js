@@ -38,7 +38,6 @@ class Catalog extends React.Component {
   };
 
   filteredCourse = (courses, tag) => {
-    console.log(tag);
     if (tag !== undefined && tag !== "all") {
       return (courses = courses.filter(course => course.tags.includes(tag)));
     } else {
@@ -53,6 +52,9 @@ class Catalog extends React.Component {
     courses.map(course => {
       return course.tags.map(tag => {
         badgeData.push(this.countTags(badgeData, tag));
+        badgeData.push(this.countTags(badgeData, "all"));
+        badgeData = badgeData.sort();
+        console.log(badgeData);
         return (badgeData = badgeData.filter(tag => tag !== 0));
       });
     });
@@ -72,6 +74,7 @@ class Catalog extends React.Component {
     let newBadgeData = [];
     badgeData = this.getBadgeData(courses);
     newBadgeData = this.createBadge(badgeData);
+    console.log(this.countCatalogBadges(courses, newBadgeData));
     return this.countCatalogBadges(courses, newBadgeData);
   };
 
@@ -87,10 +90,6 @@ class Catalog extends React.Component {
         })
       );
     });
-
-    badgeContainer.push(
-      (badges = { id: 10, name: "all", number: this.state.length })
-    );
     return badgeContainer;
   };
 
@@ -107,6 +106,8 @@ class Catalog extends React.Component {
   countCheck = (tags, name) => {
     if (tags.includes(name)) {
       return 1;
+    } else if (name === "all") {
+      return 0.5;
     } else {
       return 0;
     }
