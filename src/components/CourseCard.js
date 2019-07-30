@@ -8,25 +8,22 @@ import CardHeader from "./CardHeader";
 const useStyles = makeStyles(
   createStyles({
     card: {
-      maxWidth: 345
+      maxWidth: "25rem"
     },
     media: {
-      height: 140
+      height: "15rem"
     }
   })
 );
 
 const CourseCard = props => {
   const classes = useStyles();
-
+  // console.log(props);
   return (
     <Card className={classes.card}>
       <CardActionArea>
-        <CardHeader />
-        <CardMedia
-          className={classes.media}
-          image="/static/images/cards/contemplative-reptile.jpg"
-        />
+        <CardHeader title={props.card.title} author={props.card.author} />
+        <CardMedia className={classes.media} image={props.card.image} />
       </CardActionArea>
     </Card>
   );

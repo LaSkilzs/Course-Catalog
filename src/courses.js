@@ -1,4 +1,4 @@
-export default [
+const data = [
   {
     id: 1,
     slug: "learn-javascript",
@@ -59,3 +59,5 @@ export default [
     pro: true
   }
 ];
+
+export default data;

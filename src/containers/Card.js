@@ -7,49 +7,42 @@ const useStyles = makeStyles(theme =>
   createStyles({
     root: {
       flexGrow: 1,
-      marginLeft: 150,
-      marginTop: 60
+      marginTop: 15,
+      margin: "auto",
+      marginLeft: 100
     },
     card: {
-      marginBottom: 20
+      marginBottom: 20,
+      padding: 10
     }
   })
 );
 
-function Card() {
+const Card = props => {
   const classes = useStyles();
+  // console.log(props);
 
-  function FormRow() {
+  const card = props.cards.map(card => {
     return (
-      <React.Fragment>
+      <React.Fragment key={card.id}>
         <Grid item xs={4}>
-          <CourseCard />
-        </Grid>
-        <Grid item xs={4}>
-          <CourseCard />
-        </Grid>
-        <Grid item xs={4}>
-          <CourseCard />
+          <CourseCard card={card} key={card.id} />
         </Grid>
       </React.Fragment>
     );
-  }
+  });
+
+  // console.log(card);
 
   return (
     <div className={classes.root}>
       <Grid container spacing={1}>
         <Grid container item md={12} spacing={1} className={classes.card}>
-          <FormRow />
-        </Grid>
-        <Grid container item md={12} spacing={1}>
-          <FormRow />
-        </Grid>
-        <Grid container item md={12} spacing={1}>
-          <FormRow />
+          {card}
         </Grid>
       </Grid>
     </div>
   );
-}
+};
 
 export default Card;

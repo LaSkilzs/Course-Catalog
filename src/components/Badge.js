@@ -3,18 +3,6 @@ import { createStyles, makeStyles } from "@material-ui/core/styles";
 import Chip from "@material-ui/core/Chip";
 import Paper from "@material-ui/core/Paper";
 
-const chipData = [
-  "Angular",
-  "jQuery",
-  "Polymer",
-  "React",
-  "Vue.js",
-  "HandleBars",
-  "Flux",
-  "Redux",
-  "Flutter"
-];
-
 const useStyles = makeStyles(theme =>
   createStyles({
     root: {
@@ -25,18 +13,28 @@ const useStyles = makeStyles(theme =>
       marginRight: 100
     },
     chip: {
-      margin: theme.spacing()
+      margin: theme.spacing(),
+      fontSize: "1rem",
+      background: "black",
+      color: "white"
     }
   })
 );
 
-const Badge = () => {
+const Badge = props => {
   const classes = useStyles();
-
   return (
     <Paper className={classes.root}>
-      {chipData.map((data, idx) => {
-        return <Chip key={idx} label={data} className={classes.chip} />;
+      {props.badges.map(badge => {
+        return (
+          <Chip
+            key={badge.id}
+            label={badge.name + "   |   " + badge.number}
+            className={classes.chip}
+            onClick={() => props.handleBadgeClick(badge.name)}
+            // onClick={() => console.log(badge.name)}
+          />
+        );
       })}
     </Paper>
   );

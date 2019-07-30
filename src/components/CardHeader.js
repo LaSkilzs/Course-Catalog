@@ -6,11 +6,11 @@ const CardHeader = props => {
   return (
     <React.Fragment>
       <CardContent>
-        <Typography gutterBottom variant="h4" component="h4">
-          Title
+        <Typography gutterBottom variant="h5" component="h4">
+          {props.title}
         </Typography>
         <Typography variant="h6" color="textSecondary" component="h6">
-          Author
+          {props.author}
         </Typography>
       </CardContent>
     </React.Fragment>
