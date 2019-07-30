@@ -9,7 +9,7 @@ const useStyles = makeStyles(theme => ({
     marginBottom: 25
   }
 }));
-const Header = () => {
+const Header = props => {
   const classes = useStyles();
   return (
     <Typography variant="h2" component="h2" className={classes.root}>
