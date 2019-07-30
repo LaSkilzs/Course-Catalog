@@ -13,14 +13,16 @@ const useStyles = makeStyles(theme =>
       marginRight: 100
     },
     chip: {
-      margin: theme.spacing()
+      margin: theme.spacing(),
+      fontSize: "1rem",
+      background: "black",
+      color: "white"
     }
   })
 );
 
 const Badge = props => {
   const classes = useStyles();
-  console.log(props);
   return (
     <Paper className={classes.root}>
       {props.badges.map(badge => {
@@ -29,6 +31,8 @@ const Badge = props => {
             key={badge.id}
             label={badge.name + "   |   " + badge.number}
             className={classes.chip}
+            onClick={() => props.handleBadgeClick(badge.name)}
+            // onClick={() => console.log(badge.name)}
           />
         );
       })}

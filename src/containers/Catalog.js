@@ -9,16 +9,19 @@ class Catalog extends React.Component {
   constructor() {
     super();
     this.state = {
-      catalogData: [],
       badgeData: [],
-      cardObjects: []
+      cardObjects: [],
+      filteredCards: [],
+      tag: undefined,
+      length: courses.length
     };
   }
 
   async componentDidMount() {
     let cards = this.getCardObjects(authors, courses);
     let newBadges = this.getCatalogBadgeData(courses);
-    this.setState({ cardObjects: cards, badgeData: newBadges });
+    let length = courses.length;
+    this.setState({ cardObjects: cards, badgeData: newBadges, length });
   }
 
   getCardObjects = (authors, courses) => {
@@ -34,6 +37,17 @@ class Catalog extends React.Component {
     return cardObjects;
   };
 
+  filteredCourse = (courses, tag) => {
+    console.log(tag);
+    if (tag !== undefined && tag !== "all") {
+      return (courses = courses.filter(course => course.tags.includes(tag)));
+    } else {
+      return courses;
+    }
+  };
+
+  handleBadgeClick = tag => this.setState({ tag });
+
   getBadgeData = courses => {
     let badgeData = [];
     courses.map(course => {
@@ -42,7 +56,6 @@ class Catalog extends React.Component {
         return (badgeData = badgeData.filter(tag => tag !== 0));
       });
     });
-    console.log("getData", badgeData);
     return badgeData;
   };
 
@@ -74,6 +87,10 @@ class Catalog extends React.Component {
         })
       );
     });
+
+    badgeContainer.push(
+      (badges = { id: 10, name: "all", number: this.state.length })
+    );
     return badgeContainer;
   };
 
@@ -96,12 +113,14 @@ class Catalog extends React.Component {
   };
 
   render() {
-    console.log(this.state.badgeData);
     return (
       <React.Fragment>
         <Header />
-        <Badge badges={this.state.badgeData} />
-        <Card cards={this.state.cardObjects} />
+        <Badge
+          badges={this.state.badgeData}
+          handleBadgeClick={this.handleBadgeClick}
+        />
+        <Card cards={this.filteredCourse(courses, this.state.tag)} />
       </React.Fragment>
     );
   }
