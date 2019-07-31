@@ -3,6 +3,7 @@ import Typography from "@material-ui/core/Typography";
 import CardContent from "@material-ui/core/CardContent";
 
 const CardHeader = props => {
+  // console.log(props);
   return (
     <React.Fragment>
       <CardContent>

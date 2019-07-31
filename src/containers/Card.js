@@ -20,8 +20,7 @@ const useStyles = makeStyles(theme =>
 
 const Card = props => {
   const classes = useStyles();
-  // console.log(props);
-
+  console.log(props);
   const card = props.cards.map(card => {
     return (
       <React.Fragment key={card.id}>
@@ -31,8 +30,6 @@ const Card = props => {
       </React.Fragment>
     );
   });
-
-  // console.log(card);
 
   return (
     <div className={classes.root}>

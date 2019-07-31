@@ -9,6 +9,7 @@ class Catalog extends React.Component {
   constructor() {
     super();
     this.state = {
+      courses: courses,
       badgeData: [],
       cardObjects: [],
       filteredCards: [],
@@ -18,15 +19,39 @@ class Catalog extends React.Component {
   }
 
   async componentDidMount() {
-    let cards = this.getCardObjects(authors, courses);
+    let cards = this.getCardObjects(courses);
     let newBadges = this.getCatalogBadgeData(courses);
     let length = courses.length;
     this.setState({ cardObjects: cards, badgeData: newBadges, length });
   }
 
-  getCardObjects = (authors, courses) => {
+  getCardObjects = courses => {
+    let cardObjects = this.createCard(courses);
+    return cardObjects;
+  };
+
+  filteredCourse = tag => {
+    let result = [];
+    let newCourses = [...this.state.courses];
+
+    if (tag !== undefined && tag !== "all") {
+      newCourses.filter(course => {
+        if (course.tags.includes(tag)) {
+          return result.push(course);
+        }
+      });
+      console.log(result);
+      return this.createCard(result);
+    } else {
+      console.log(newCourses);
+      return this.createCard(this.state.courses);
+    }
+  };
+
+  createCard = courses => {
+    console.log(courses);
     let card = {};
-    let cardObjects = courses.map(course => {
+    let cardData = courses.map(course => {
       return (card = {
         id: course.id,
         title: course.title,
@@ -34,17 +59,8 @@ class Catalog extends React.Component {
         author: authors[course.author_id].name
       });
     });
-    return cardObjects;
+    return cardData;
   };
-
-  filteredCourse = (courses, tag) => {
-    if (tag !== undefined && tag !== "all") {
-      return (courses = courses.filter(course => course.tags.includes(tag)));
-    } else {
-      return courses;
-    }
-  };
-
   handleBadgeClick = tag => this.setState({ tag });
 
   getBadgeData = courses => {
@@ -112,6 +128,7 @@ class Catalog extends React.Component {
   };
 
   render() {
+    console.log(this.filteredCourse());
     return (
       <React.Fragment>
         <Header />
@@ -119,7 +136,7 @@ class Catalog extends React.Component {
           badges={this.state.badgeData}
           handleBadgeClick={this.handleBadgeClick}
         />
-        <Card cards={this.filteredCourse(courses, this.state.tag)} />
+        <Card cards={this.filteredCourse(this.state.tag)} />
       </React.Fragment>
     );
   }
