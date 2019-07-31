@@ -20,7 +20,6 @@ const useStyles = makeStyles(theme =>
 
 const Card = props => {
   const classes = useStyles();
-  console.log(props);
   const card = props.cards.map(card => {
     return (
       <React.Fragment key={card.id}>

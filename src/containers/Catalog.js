@@ -2,8 +2,8 @@ import React from "react";
 import Header from "../components/Header";
 import Card from "./Card";
 import Badge from "../components/Badge";
-import authors from "../authors";
 import courses from "../courses";
+import fetchAuthorData from "../fetchAuthorData";
 
 class Catalog extends React.Component {
   constructor() {
@@ -14,8 +14,12 @@ class Catalog extends React.Component {
       cardObjects: [],
       filteredCards: [],
       tag: undefined,
-      length: courses.length
+      length: courses.length,
+      authors: {}
     };
+    fetchAuthorData().then(authors => {
+      this.setState({ authors: authors.authors });
+    });
   }
 
   async componentDidMount() {
@@ -40,23 +44,25 @@ class Catalog extends React.Component {
           return result.push(course);
         }
       });
-      console.log(result);
       return this.createCard(result);
     } else {
-      console.log(newCourses);
       return this.createCard(this.state.courses);
     }
   };
 
   createCard = courses => {
-    console.log(courses);
-    let card = {};
     let cardData = courses.map(course => {
+      let card = {};
+      let author = "";
+      if (this.state.authors[course.author_id]) {
+        author = this.state.authors[course.author_id].name;
+      }
+
       return (card = {
         id: course.id,
         title: course.title,
         image: course.image,
-        author: authors[course.author_id].name
+        author: author
       });
     });
     return cardData;
@@ -128,7 +134,6 @@ class Catalog extends React.Component {
   };
 
   render() {
-    console.log(this.filteredCourse());
     return (
       <React.Fragment>
         <Header />
